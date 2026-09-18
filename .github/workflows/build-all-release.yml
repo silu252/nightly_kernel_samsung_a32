@@ -148,3 +148,11 @@ jobs:
         updateOnlyUnreleased: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Remove Existing Release and Tag (if any)
+  run: |
+    if gh release view "your-tag-name" &>/dev/null; then
+      gh release delete "your-tag-name" --yes --cleanup-tag
+    else
+      echo "Release not found, skipping removal."
+    fi
